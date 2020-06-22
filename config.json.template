@@ -1,0 +1,14 @@
+{
+    "datacite_test": {
+        "url": "https://api.test.datacite.org/dois",
+        "username": "",
+        "password": "",
+        "doi_prefix": "10.70027"
+    },
+    "datacite_live": {
+        "url": "https://api.datacite.org/dois",
+        "username": "",
+        "password": "",
+        "doi_prefix": "10.6069"
+    }
+}
