@@ -7,8 +7,8 @@ import datacite
 
 logger = logging.getLogger(__name__)
 
-def delete_doi(params, doi):
-    service = datacite.DataciteService(params, False)
+def delete_doi(params, doi, live=False):
+    service = datacite.DataciteService(params, live)
     return service.delete_doi(doi)
 
 def get_args():
@@ -30,7 +30,8 @@ def main(argv=None):
     with open(infile) as fh:
         for line in fh:
             doi = line.strip()
-            delete_doi(params, doi)
+            live = True if doi.startswith('10.6069') else False 
+            delete_doi(params, doi, live)
 
 if __name__ == "__main__":
     sys.exit(main())

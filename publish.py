@@ -3,23 +3,32 @@ import logging
 import urllib.parse
 
 import settings
-import datacite
+import requests
+import json
 
 logger = logging.getLogger(__name__)
 
 #TEST_PARAMS = settings.DATACITE_TEST
 PARAMS = settings.DATACITE_LIVE
+HEADERS = {'Content-Type': 'application/vnd.api+json'}
 
 def _auth():
-    return {
-        'username': PARAMS['username'],
-        'password': PARAMS['password'],
-    }
+    return (PARAMS['username'], PARAMS['password'])
+
+
+def update_doi(url, auth, payload):
+    return requests.put(
+        url,
+        headers=HEADERS,
+        auth=auth,
+        data=json.dumps(payload)
+    )
+
 
 def publish_doi(doi):
     url = '{}/{}'.format(PARAMS['url'], urllib.parse.quote_plus(doi))
     payload = {"data": {"attributes": {"event": "publish"}}}
-    response = datacite.update_doi(url, _auth(), payload)
+    response = update_doi(url, _auth(), payload)
     if response.status_code == 200:
         logger.debug('DOI:' + doi)
     else:

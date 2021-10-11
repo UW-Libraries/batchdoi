@@ -71,7 +71,6 @@ class DataciteService():
     
     def __init__(self, params, use_live=False):
         if use_live:
-            assert False
             params = params['datacite_live']
         else:
             params = params['datacite_test']

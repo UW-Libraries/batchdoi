@@ -46,7 +46,7 @@ class DOIService():
         self.gen_suffix = gen_suffix
 
     def submit_doi(self, payload):
-        response = self.external_service.add_doi(doi, payload)
+        response = self.external_service.add_doi(payload)
         status_code = response.status_code
         if status_code == 201:
             LOGGER.debug('DOI submitted:' + payload['data']['id'])
@@ -55,15 +55,15 @@ class DOIService():
             return 'ERROR'
         return payload['data']['id']
 
-    def doi_exists(doi):
+    def doi_exists(self, doi):
         response = self.external_service.get_doi(doi)
         status_code = response.status_code
         return status_code != 404
 
     def generate_doi_name(self):
         for suffix in self.gen_suffix():
-            doi = '%s/%s' % (self.doi_prefix, suffix)
-            if not doi_exists(doi):
+            doi = '%s/%s' % (self.external_service.prefix, suffix)
+            if not self.doi_exists(doi):
                 return doi
 
 def gen_data(infile):
@@ -94,19 +94,19 @@ def process_payloads(doi_service, submit, payloads):
             yield json.dumps(p)
 
 def get_config(path):
-    with open(settings_file) as json_data_file:
+    with open(path) as json_data_file:
         settings = json.load(json_data_file)
     return settings
 
 def gen_suffix():
     chars = string.ascii_lowercase + string.digits
     while True:
-        yield random.choice(chars)
+        yield ''.join([random.choice(chars) for _ in range(8)])
 
 def main():
     args = get_args()
     datacite_params = get_config(args['config'])
-    datacite_adapter = DataciteService(datacite_params)
+    datacite_adapter = datacite.DataciteService(datacite_params, use_live=args['live'])
     doi_service = DOIService(datacite_adapter, gen_suffix)
     doi_names = gen_doi_names(doi_service)
     data = gen_data(args['requests'])
