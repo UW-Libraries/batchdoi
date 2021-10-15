@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-'''Foo  
+'''Given DOI data as input, create DOIs via web service
 '''
 
 import sys
@@ -18,10 +18,9 @@ import services
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(filename='example.log', filemode='w', level=logging.DEBUG)
 
-
 def get_args():
     '''Get command line arguments as well as configuration settings'''
-    parser_desc = 'Process a batch of DOI requests.'
+    parser_desc = 'Create DOIs from input file.'
     parser = argparse.ArgumentParser(description=parser_desc)
     parser.add_argument("requests", help="CSV formatted file of DOI requests")
     parser.add_argument("-c", "--config", help="Config file path (defaults to './config.json')", default='config.json')
@@ -71,8 +70,8 @@ def main():
     else:
         datacite_settings = datacite_params['datacite_test']
     datacite_service = datacite.DataciteService(datacite_settings)
-    gen_name = services.DOINameGenerator(datacite_service, gen_suffix())
-    doi_service = services.DOIService(datacite_service, dcdata.create_payload, gen_name)
+    names = services.DOINameGenerator(datacite_service, gen_suffix()).doi_names()
+    doi_service = services.DOIService(datacite_service, dcdata.create_payload, names)
     data = gen_data(args['requests'])
     for request in gen_request_data(data):
         #print(request) 

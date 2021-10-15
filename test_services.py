@@ -11,10 +11,10 @@ class TestDOIService(unittest.TestCase):
         external_service.add_doi.return_value = response
 
         service_data_creator = Mock(spec=['create_payload'])
-        service_data_creator.create_payload.return_value = {'data': {'id': 'DOINAME'}}
+        service_data_creator.return_value = {'data': {'id': 'DOINAME'}}
 
         expected = 'DOINAME'
-        doi_service = services.DOIService(external_service, service_data_creator, Mock())
+        doi_service = services.DOIService(external_service, service_data_creator, ['FOO'])
         response = doi_service.submit_doi({}, True)
         self.assertEqual(response, expected)
 
@@ -25,7 +25,7 @@ class TestDOIService(unittest.TestCase):
         external_service.add_doi.return_value = response
         service_data_creator = Mock(spec=['create_payload'])
         expected = 'ERROR'
-        doi_service = services.DOIService(external_service, service_data_creator, Mock())
+        doi_service = services.DOIService(external_service, service_data_creator, ['FOO'])
         response = doi_service.submit_doi({}, True)
         self.assertEqual(response, expected)
 
@@ -76,10 +76,10 @@ class TestNameGenerator(unittest.TestCase):
         external_service = Mock(spec=['get_doi'])
         external_service.get_doi.return_value = response
         external_service.prefix = 'FOO'
-        suffix_generator = lambda: (suffix for suffix in [123])
+        suffix_generator = (suffix for suffix in [123])
 
         doi_name_generator = services.DOINameGenerator(external_service, suffix_generator)
-        response = next(doi_name_generator.generate_doi_name())
+        response = next(doi_name_generator.doi_names())
         expected = 'FOO/123' 
         self.assertEqual(response, expected)
 
@@ -92,10 +92,10 @@ class TestNameGenerator(unittest.TestCase):
         external_service = Mock(spec=['get_doi'])
         external_service.get_doi.side_effect = responses
         external_service.prefix = 'FOO'
-        suffix_generator = lambda: (suffix for suffix in ['123', '456'])
+        suffix_generator = (suffix for suffix in ['123', '456'])
 
         doi_name_generator = services.DOINameGenerator(external_service, suffix_generator)
-        response = next(doi_name_generator.generate_doi_name())
+        response = next(doi_name_generator.doi_names())
         expected = 'FOO/456' 
         self.assertEqual(response, expected)
 

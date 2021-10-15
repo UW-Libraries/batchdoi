@@ -27,7 +27,6 @@ class DataciteService():
         )
 
     def update_doi(self, doi_name, payload):
-        assert False
         url = '{}/{}'.format(self.url, urllib.parse.quote_plus(doi_name))
         return requests.put(
             url,

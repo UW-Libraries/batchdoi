@@ -12,16 +12,15 @@ logging.basicConfig(filename='example.log', filemode='w', level=logging.DEBUG)
 
 
 class DOIService():
-    def __init__(self, external_service, service_data_creator, gen_name):
+    def __init__(self, external_service, service_data_creator, doi_names):
         self.external_service = external_service
         self.service_data_creator = service_data_creator
-        self.generate_doi_name = gen_name
+        self.doi_names = doi_names
     
     def submit_doi(self, request, submit=False):
         if not submit:
             return request 
-        doi_name = self.generate_doi_name.generate_doi_name()
-        payload = self.service_data_creator.create_payload(request, doi_name)
+        payload = self.service_data_creator(request, next(iter(self.doi_names)))
         response = self.external_service.add_doi(payload)
         if response.status_code == 201:
             LOGGER.debug('DOI submitted:' + payload['data']['id'])
@@ -31,7 +30,7 @@ class DOIService():
         return payload['data']['id']
     
     def publish_doi(self, doi_name):
-        payload = self.service_data_creator.create_publish_payload()
+        payload = self.service_data_creator()
         response = self.external_service.update_doi(doi_name, payload)
         if response.status_code == 201:
             LOGGER.debug('DOI published:' + doi_name)
@@ -57,8 +56,8 @@ class DOINameGenerator():
         self.external_service = external_service
         self.gen_suffix = gen_suffix
 
-    def generate_doi_name(self):
-        for suffix in self.gen_suffix():
+    def doi_names(self):
+        for suffix in self.gen_suffix:
             doi = '%s/%s' % (self.external_service.prefix, suffix)
             if not self.doi_exists(doi):
                 yield doi
