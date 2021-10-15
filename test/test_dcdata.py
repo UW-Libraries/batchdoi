@@ -1,5 +1,5 @@
 import unittest
-import dcdata
+import bulkdoi.dcdata as dcdata
 from unittest.mock import patch
 
 
@@ -12,7 +12,7 @@ class TestCreatePayload(unittest.TestCase):
                 "attributes": 'ATTRIBUTES',
             }
         }
-        with patch('dcdata.make_attributes') as mock_make_attributes:
+        with patch('bulkdoi.dcdata.make_attributes') as mock_make_attributes:
             mock_make_attributes.return_value = 'ATTRIBUTES'
             self.assertEqual(dcdata.create_payload(None, 'DOINAME'), expected)
 
@@ -38,7 +38,7 @@ class TestMakeAttributes(unittest.TestCase):
             'publicationYear': 'PUBLICATION_YEAR',
             'types': {'resourceTypeGeneral': 'RESOURCE_TYPE'},
         }
-        with patch('dcdata.make_creator') as mock_make_creator:
+        with patch('bulkdoi.dcdata.make_creator') as mock_make_creator:
             mock_make_creator.return_value = 'CREATOR'
             response = dcdata.make_attributes(self.request_data, 'DOINAME')
             self.assertEqual(response, expected)
@@ -46,7 +46,7 @@ class TestMakeAttributes(unittest.TestCase):
     def test_with_description(self):
         self.request_data['description'] = 'DESCRIPTION'
         expected = [{'description': 'DESCRIPTION'}]
-        with patch('dcdata.make_creator') as mock_make_creator:
+        with patch('bulkdoi.dcdata.make_creator') as mock_make_creator:
             mock_make_creator.return_value = 'CREATOR'
             response = dcdata.make_attributes(self.request_data, 'DOINAME')
             self.assertEqual(response['descriptions'], expected)
@@ -54,7 +54,7 @@ class TestMakeAttributes(unittest.TestCase):
     def test_multiple_creators(self):
         self.request_data['creators'] = 'CREATOR1; CREATOR2'
         expected = ['CREATOR1', 'CREATOR2']
-        with patch('dcdata.make_creator') as mock_make_creator:
+        with patch('bulkdoi.dcdata.make_creator') as mock_make_creator:
             mock_make_creator.side_effect = ['CREATOR1', 'CREATOR2']
             response = dcdata.make_attributes(self.request_data, 'DOINAME')
             self.assertEqual(response['creators'], expected)
@@ -67,26 +67,26 @@ class TestMakeCreator(unittest.TestCase):
 
     def test_weird_nametype(self):
         expected = {'givenName': '', 'familyName': 'Smith', 'nameType': 'Personal'}
-        with patch('dcdata.parse_name') as mock_parse_name:
+        with patch('bulkdoi.dcdata.parse_name') as mock_parse_name:
             mock_parse_name.return_value = ('Weird', ['Smith'])
             with self.assertRaises(ValueError):
                 self.assertEqual(dcdata.make_creator('x'), expected)
 
     def test_personal_single_name(self):
         expected = {'givenName': '', 'familyName': 'Smith', 'nameType': 'Personal'}
-        with patch('dcdata.parse_name') as mock_parse_name:
+        with patch('bulkdoi.dcdata.parse_name') as mock_parse_name:
             mock_parse_name.return_value = ('Personal', ['Smith'])
             self.assertEqual(dcdata.make_creator('x'), expected)
 
     def test_personal_full_name(self):
         expected = {'givenName': 'Robert M', 'familyName': 'Smith', 'nameType': 'Personal'}
-        with patch('dcdata.parse_name') as mock_parse_name:
+        with patch('bulkdoi.dcdata.parse_name') as mock_parse_name:
             mock_parse_name.return_value = ('Personal', ['Smith', 'Robert M'])
             self.assertEqual(dcdata.make_creator('x'), expected)
 
     def test_organizational_name(self):
         expected = {'name': 'University of Washington', 'nameType': 'Organizational'}
-        with patch('dcdata.parse_name') as mock_parse_name:
+        with patch('bulkdoi.dcdata.parse_name') as mock_parse_name:
             mock_parse_name.return_value = ('Organizational', ['University of Washington'])
             self.assertEqual(dcdata.make_creator('x'), expected)
 

@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+# coding: utf8
+
+'''Publish DOIs given input file with DOI names
+'''
 import sys
 import argparse
 import logging

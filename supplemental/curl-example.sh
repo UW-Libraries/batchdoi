@@ -1,4 +1,5 @@
 # cURL test request for creating and deleting a DOI on Datacite
+# Note: if credentials are incorrect, Datacite returns a 404, not a 401
 
 # Create minimal DOI on Datacite test site
 curl --request POST \

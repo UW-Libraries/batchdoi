@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+# coding: utf8
+
+'''Delete DOIs in input file
+'''
 import sys
 import argparse
 import logging
