@@ -3,16 +3,24 @@
 
 import sys
 import argparse
+import configure
+
+def set_config():
+    configure.set_config()
+
+def create_dois():
+    conf = configure.get_config()
+    print(conf)
 
 def get_args():
     '''Get command line arguments as well as configuration settings'''
     parser_desc = 'Create DOIs from input file.'
     parser = argparse.ArgumentParser(description=parser_desc)
     subparsers = parser.add_subparsers()
-    create_parser = subparsers.add_parser('create')
+    create_parser = subparsers.add_parser('create', description='Create Datacite DOIs')
     publish_parser = subparsers.add_parser('publish')
     delete_parser = subparsers.add_parser('delete')
-    config_parser = subparsers.add_parser('config')
+    config_parser = subparsers.add_parser('config', description='Configure Datacite credentials')
     
     create_parser.add_argument('-f', '--foo', action='store_true', help="FOO")
     publish_parser.add_argument('-b', '--bar', action='store_true', help="BAR")
@@ -24,7 +32,9 @@ def get_args():
     #parser.add_argument('-l', '--live', action='store_true', help="Create DOIs on the live system instead of the test system")
     #parser.add_argument('-p', '--publish', action='store_true', help="Publish DOIs in addition to creating them. Note that published DOIs cannot be deleted.")
 
+    #config_parser.add_argument('-h', '--help', )
     config_parser.set_defaults(func=set_config)
+    create_parser.set_defaults(func=create_dois)
 
     args = vars(parser.parse_args())
     return args

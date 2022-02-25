@@ -17,12 +17,24 @@ def set_config():
     config['PRODUCTION'] = prod_credentials
     with open(CONFIG_PATH, 'w') as configfile:
         config.write(configfile)
-    return config
+    return make_dict(config)
 
 def get_config():
     if os.path.exists(CONFIG_PATH):
         config = configparser.ConfigParser()
         config.read(CONFIG_PATH)
-        return config
+        return make_dict(config)
     else:
         return set_config()
+
+def make_dict(config):
+    return {
+        'test': {
+            'username': config['TEST']['username'],
+            'password': config['TEST']['password']
+            },
+        'production': {
+            'username': config['PRODUCTION']['username'],
+            'password': config['PRODUCTION']['password']
+        }
+    }
