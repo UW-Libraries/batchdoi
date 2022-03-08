@@ -6,7 +6,7 @@ CONFIG_PATH = os.path.join(dir_path, 'credentials.ini')
 
 def set_config():
     config = configparser.ConfigParser()
-    print('Enter Datacite credentials as prompted. Enter empty line to abort.')
+    print('Enter Datacite credentials as prompted. Enter empty line to abort at any point.')
     test_username = input("Enter the Datacite TEST username:")
     if not test_username: return
     test_password = input("Enter the Datacite TEST password:")
@@ -36,11 +36,15 @@ def get_config():
 
 def make_dict(config):
     return {
-        'test': {
+        'datacite_test': {
+            'url': 'https://api.test.datacite.org/dois',
+            'doi_prefix': '10.70027',
             'username': config['TEST']['username'],
             'password': config['TEST']['password']
             },
-        'production': {
+        'datacite_live': {
+            'url': 'https://api.datacite.org/dois',
+            'doi_prefix': '10.606',
             'username': config['PRODUCTION']['username'],
             'password': config['PRODUCTION']['password']
         }
