@@ -14,7 +14,7 @@ def extract_header(datafile):
 
 
 def extract_data(datafile):
-    revised_header = ['url', 'creators', 'title', 'publisher', 'pubyear', 'restype', 'description']
+    revised_header = ['url', 'creators', 'title', 'publisher', 'publication_year', 'resource_type', 'description']
     wb = openpyxl.load_workbook(filename=datafile)
     sh = wb.active
     data = []

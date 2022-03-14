@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-'''Foo  
-'''
+"""Foo
+"""
 
 import logging
 
@@ -18,9 +18,10 @@ class DOIService():
         self.doi_names = doi_names
     
     def submit_doi(self, request, submit=False):
-        if not submit:
-            return request 
         payload = self.service_data_creator(request, next(iter(self.doi_names)))
+        if not submit:
+            return payload
+        assert False
         response = self.external_service.add_doi(payload)
         if response.status_code == 201:
             LOGGER.debug('DOI submitted:' + payload['data']['id'])

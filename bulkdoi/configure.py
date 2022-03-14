@@ -44,7 +44,7 @@ def make_dict(config):
             },
         'datacite_live': {
             'url': 'https://api.datacite.org/dois',
-            'doi_prefix': '10.606',
+            'doi_prefix': '10.6069',
             'username': config['PRODUCTION']['username'],
             'password': config['PRODUCTION']['password']
         }

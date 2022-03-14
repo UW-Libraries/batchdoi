@@ -32,8 +32,8 @@ def checkrow(row):
     errors.append(creators_is_malformed(row['creators']))
     errors.append(title_is_malformed(row['title']))
     errors.append(publisher_is_malformed(row['publisher']))
-    errors.append(pubyear_is_malformed(row['pubyear']))
-    errors.append(restype_is_malformed(row['restype']))
+    errors.append(pubyear_is_malformed(row['publication_year']))
+    errors.append(restype_is_malformed(row['resource_type']))
     return [i for i in errors if i]
 
 

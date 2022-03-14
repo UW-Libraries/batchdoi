@@ -5,8 +5,12 @@ import sys
 import os
 import argparse
 import configure
+import random
 import getdata
 import check
+import datacite
+import dcdata
+import services
 
 
 def get_args():
@@ -70,9 +74,24 @@ def checkdata(args):
 def create_dois(args):
     if not checkdata(args):
         return
-    print('CREATE')
+    datafile = args['datafile']
     conf = configure.get_config()
-    print(conf)
+    if args['live']:
+        datacite_settings = conf['datacite_live']
+    else:
+        datacite_settings = conf['datacite_test']
+    datacite_service = datacite.DataciteService(datacite_settings)
+    names = services.DOINameGenerator(datacite_service, gen_suffix()).doi_names()
+    doi_service = services.DOIService(datacite_service, dcdata.create_payload, names)
+    for request in getdata.extract_data(datafile):
+        doi = doi_service.submit_doi(request, submit=args['submit'])
+        print(doi)
+
+
+def gen_suffix():
+    chars = '0123456789bcdfghjkmnpqrstvwxyz' # alphanum without vowels and l
+    while True:
+        yield ''.join([random.choice(chars) for _ in range(8)])
 
 
 def publish_dois():
@@ -88,8 +107,6 @@ def main():
     args = get_args()
     if 'func' in args:
         args['func'](args)
-    #datacite_params = get_config(args['config'])
-    #print(args)
 
 
 if __name__ == "__main__":
