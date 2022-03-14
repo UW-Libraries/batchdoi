@@ -131,3 +131,6 @@ dmypy.json
 config.json
 
 .DS_Store
+.idea/
+credentials.ini
+*.xlsx
