@@ -5,7 +5,7 @@ Scripts for use in creating and managing bulk DOI requests.
 
 These scripts were created to make it possible to submit DOI requests in a batch rather than one-by-one through the libraries' DOI request web page.
 
-The requester enters the data into a spreadsheet that we provide them with all of the necessary fields. We then export the data to CSV file and use it as input to the create.py script as described below.
+The requester enters the data into a spreadsheet that we provide them with all of the necessary fields. We then export the data to CSV file and use it as input to the create.py script as described below.  
 
 ## Getting Started
 
