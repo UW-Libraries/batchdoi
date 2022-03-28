@@ -27,18 +27,20 @@ def extract_data(datafile):
                 if cellval is None:
                     rowdata.append('')
                 else:
-                    rowdata.append(row[idx].value)
+                    rowdata.append(strip_if_str(cellval))
         if rowdata:
             data.append(dict(zip(revised_header, rowdata)))
     return data
 
+def strip_if_str(item):
+    return item.strip() if type(item) == str else item
 
 def main(argv=None):
     if argv is None:
         argv = sys.argv
     datafile = argv[1]
     header = extract_header(datafile)
-    print(checkheader(header))
+    print(header)
     data = extract_data(datafile)
     print(data)
 

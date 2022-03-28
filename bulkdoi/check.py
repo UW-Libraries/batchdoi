@@ -1,6 +1,6 @@
 import sys
 import re
-import getdata
+import bulkdoi.getdata as getdata
 
 
 def checkheader(header):

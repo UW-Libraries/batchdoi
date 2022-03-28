@@ -21,7 +21,7 @@ class DOIService():
         payload = self.service_data_creator(request, next(iter(self.doi_names)))
         if not submit:
             return payload
-        assert False
+        #assert False
         response = self.external_service.add_doi(payload)
         if response.status_code == 201:
             LOGGER.debug('DOI submitted:' + payload['data']['id'])
