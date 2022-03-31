@@ -1,6 +1,6 @@
 import unittest
 import bulkdoi.services as services
-from unittest.mock import Mock, patch
+from unittest.mock import Mock
 
 
 class TestDOIService(unittest.TestCase):
@@ -69,6 +69,7 @@ class TestDOIService(unittest.TestCase):
         expected = False
         self.assertEqual(response, expected)
 
+
 class TestNameGenerator(unittest.TestCase):
     def test_generate_doi_name(self):
         response = Mock()
@@ -98,6 +99,7 @@ class TestNameGenerator(unittest.TestCase):
         response = next(doi_name_generator.doi_names())
         expected = 'FOO/456' 
         self.assertEqual(response, expected)
+
 
 if __name__ == '__main__':
     unittest.main()

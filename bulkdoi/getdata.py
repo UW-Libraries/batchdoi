@@ -8,7 +8,8 @@ def extract_header(datafile):
     header = []
     for i in range(1, sh.max_column+1):
         cell_obj = sh.cell(row=1, column=i)
-        if cell_obj.value is None: break
+        if cell_obj.value is None:
+            break
         header.append(cell_obj.value.strip())
     return header
 
@@ -32,8 +33,10 @@ def extract_data(datafile):
             data.append(dict(zip(revised_header, rowdata)))
     return data
 
+
 def strip_if_str(item):
     return item.strip() if type(item) == str else item
+
 
 def main(argv=None):
     if argv is None:

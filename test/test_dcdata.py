@@ -93,7 +93,7 @@ class TestMakeCreator(unittest.TestCase):
 
 class TestParseName(unittest.TestCase):
     def test_personal_name_split(self):
-        #logger.info('Running test_add()')
+        # logger.info('Running test_add()')
         data = ' Smith , Robert M '
         expected = ['Smith', 'Robert M']
         _, splitname = dcdata.parse_name(data)

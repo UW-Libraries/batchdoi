@@ -9,7 +9,6 @@ class TestCheckHeader(unittest.TestCase):
         self.assertFalse(errors)
 
     def test_empty_header(self):
-        header = ['URLx', 'Creators', 'Title', 'Publisher', 'Publication Year', 'Resource Type', 'Description']
         header = []
         errors = check.checkheader(header)
         self.assertTrue(errors)
@@ -98,6 +97,7 @@ class TestTitleIsMalformed(unittest.TestCase):
         response = check.title_is_malformed('')
         self.assertIsNotNone(response)
 
+
 class TestPublisherIsMalformed(unittest.TestCase):
     def test_normal(self):
         response = check.publisher_is_malformed('This is a publisher')
@@ -147,7 +147,6 @@ class TestRestypeIsMalformed(unittest.TestCase):
         for item in accepted_values:
             response = check.restype_is_malformed(item)
             self.assertIsNone(response)
-
 
     def test_not_in_list_rejected(self):
         response = check.restype_is_malformed('SomeWeirdValue')

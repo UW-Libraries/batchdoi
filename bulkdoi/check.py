@@ -22,18 +22,14 @@ def checkdata(data):
     for idx, row in enumerate(data):
         rowerrors = checkrow(row)
         if rowerrors:
-            errors.append((idx+2, rowerrors))
+            errors.append((idx + 2, rowerrors))
     return errors
 
 
 def checkrow(row):
-    errors = []
-    errors.append(url_is_malformed(row['url']))
-    errors.append(creators_is_malformed(row['creators']))
-    errors.append(title_is_malformed(row['title']))
-    errors.append(publisher_is_malformed(row['publisher']))
-    errors.append(pubyear_is_malformed(row['publication_year']))
-    errors.append(restype_is_malformed(row['resource_type']))
+    errors = [url_is_malformed(row['url']), creators_is_malformed(row['creators']), title_is_malformed(row['title']),
+              publisher_is_malformed(row['publisher']), pubyear_is_malformed(row['publication_year']),
+              restype_is_malformed(row['resource_type'])]
     return [i for i in errors if i]
 
 
@@ -49,7 +45,7 @@ def creators_is_malformed(creators):
         return 'Creators field is empty'
     for name in [item.strip() for item in creators.split(';')]:
         if name.startswith('['):
-            if not re.fullmatch('^\[[^\[\]]+\]$', name):
+            if not re.fullmatch(r'^\[[^\[\]]+]$', name):
                 return 'Creators field has an organization with mismatched brackets'
         else:
             if '[' in name[1:]:
@@ -78,7 +74,7 @@ def publisher_is_malformed(publisher):
 def pubyear_is_malformed(pubyear):
     try:
         pubyear_int = int(pubyear)
-    except:
+    except ValueError:
         return 'Publication Year field must be an integer'
     if pubyear_int > 1900:
         return None
@@ -86,22 +82,10 @@ def pubyear_is_malformed(pubyear):
 
 
 def restype_is_malformed(restype):
-    accepted = set([
-        'Audiovisual',
-        'Collection',
-        'DataPaper',
-        'Dataset',
-        'Event',
-        'Image',
-        'InteractiveResource',
-        'Model',
-        'PhysicalObject',
-        'Service',
-        'Software',
-        'Sound',
-        'Text',
-        'Workflow'
-    ])
+    accepted = {'Audiovisual',
+                'Collection',
+                'DataPaper', 'Dataset', 'Event', 'Image', 'InteractiveResource', 'Model',
+                'PhysicalObject', 'Service', 'Software', 'Sound', 'Text', 'Workflow'}
     if restype.strip() in accepted:
         return None
     return 'Resource Type field must be one of the choices in list'

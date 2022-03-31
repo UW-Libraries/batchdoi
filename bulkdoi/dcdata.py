@@ -8,12 +8,14 @@ def create_payload(form_data, doiname):
     }
     return payload
 
+
 def create_publish_payload():
     return {
         "data": {
             "attributes": {"event": "publish"},
         }
     }
+
 
 def make_attributes(form_data, doiname):
     attributes = {
@@ -29,8 +31,9 @@ def make_attributes(form_data, doiname):
         attributes['descriptions'] = [{'description': form_data['description']}]
     return attributes
 
+
 def make_creator(name):
-    assert(name)
+    assert name
     nametype, splitname = parse_name(name)
     if nametype == 'Personal':
         if len(splitname) >= 2:
@@ -52,6 +55,7 @@ def make_creator(name):
         }
     else:
         raise ValueError
+
 
 def parse_name(name):
     name = name.strip()

@@ -14,7 +14,7 @@ import services
 
 
 def get_args():
-    '''Get command line arguments as well as configuration settings'''
+    """Get command line arguments as well as configuration settings"""
     parser_desc = 'Create, publish, and delete Datacite DOIs.'
     parser = argparse.ArgumentParser(description=parser_desc)
     subparsers = parser.add_subparsers()
@@ -89,18 +89,38 @@ def create_dois(args):
 
 
 def gen_suffix():
-    chars = '0123456789bcdfghjkmnpqrstvwxyz' # alphanum without vowels and l
+    chars = '0123456789bcdfghjkmnpqrstvwxyz'  # alphanum without vowels and l
     while True:
         yield ''.join([random.choice(chars) for _ in range(8)])
 
 
-def publish_dois():
-    print('PUBLISH')
+def publish_dois(args):
+    infile = args['doifile']
+    conf = configure.get_config()
+    if args['live']:
+        datacite_settings = conf['datacite_live']
+    else:
+        datacite_settings = conf['datacite_test']
+    datacite_service = datacite.DataciteService(datacite_settings)
+    names = services.DOINameGenerator(datacite_service, gen_suffix()).doi_names()
+    doi_service = services.DOIService(datacite_service, dcdata.create_payload, names)
+    with open(infile) as fh:
+        for line in fh:
+            doi_service.publish_doi(line.strip())
 
 
-def delete_dois():
-    test_username = input('Delete the DOIs in file: {}.'.format(doifile))
-    print('DELETE')
+def delete_dois(args):
+    infile = args['doifile']
+    conf = configure.get_config()
+    if args['live']:
+        datacite_settings = conf['datacite_live']
+    else:
+        datacite_settings = conf['datacite_test']
+    datacite_service = datacite.DataciteService(datacite_settings)
+    doi_service = services.DOIService(datacite_service, None, None)
+    with open(infile) as fh:
+        for line in fh:
+            doi_service.delete_doi(line.strip())
 
 
 def main():

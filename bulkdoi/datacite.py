@@ -2,7 +2,8 @@ import urllib.parse
 import json
 import requests
 
-class DataciteService():
+
+class DataciteService:
     HEADERS = {'Content-Type': 'application/vnd.api+json'}
     
     def __init__(self, settings):
@@ -42,5 +43,3 @@ class DataciteService():
             headers=self.HEADERS,
             auth=self.auth,
         )
-
-
