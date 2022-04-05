@@ -4,13 +4,13 @@
 import sys
 import os
 import argparse
-import configure
+from batchdoi import configure
 import random
-import getdata
-import check
-import datacite
-import dcdata
-import services
+from batchdoi import getdata
+from batchdoi import check
+from batchdoi import datacite
+from batchdoi import dcdata
+from batchdoi import services
 
 
 def get_args():

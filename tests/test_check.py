@@ -1,5 +1,5 @@
 import unittest
-from .context.batchdoi import check
+from batchdoi import check
 
 
 class TestCheckHeader(unittest.TestCase):

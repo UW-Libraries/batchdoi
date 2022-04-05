@@ -1,5 +1,5 @@
 import unittest
-import .context.batchdoi.services as services
+from batchdoi import services
 from unittest.mock import Mock
 
 

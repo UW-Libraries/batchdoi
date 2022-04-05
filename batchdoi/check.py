@@ -1,7 +1,6 @@
 import sys
 import re
-import batchdoi.getdata
-#from batchdoi import getdata
+from batchdoi import getdata
 
 
 def checkheader(header):
