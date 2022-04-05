@@ -1,6 +1,7 @@
 import sys
 import re
-import batchdoi.getdata as getdata
+import batchdoi.getdata
+#from batchdoi import getdata
 
 
 def checkheader(header):
@@ -95,9 +96,9 @@ def main(argv=None):
     if argv is None:
         argv = sys.argv
     datafile = argv[1]
-    header = getdata.extract_header(datafile)
+    header = batchdoi.getdata.extract_header(datafile)
     print(checkheader(header))
-    data = getdata.extract_data(datafile)
+    data = batchdoi.getdata.extract_data(datafile)
     print(checkdata(data))
 
 
