@@ -1,5 +1,5 @@
 import unittest
-import bulkdoi.services as services
+import batchdoi.services as services
 from unittest.mock import Mock, patch
 
 

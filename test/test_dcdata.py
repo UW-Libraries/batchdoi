@@ -1,5 +1,5 @@
 import unittest
-import bulkdoi.dcdata as dcdata
+import batchdoi.dcdata as dcdata
 from unittest.mock import patch
 
 

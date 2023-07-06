@@ -10,7 +10,6 @@ import logging
 import json
 import csv
 import random
-import string
 import datacite
 import dcdata
 import services
@@ -74,7 +73,6 @@ def main():
     doi_service = services.DOIService(datacite_service, dcdata.create_payload, names)
     data = gen_data(args['requests'])
     for request in gen_request_data(data):
-        #print(request) 
         doi = doi_service.submit_doi(request, submit=args['submit'])
         print(doi)
 

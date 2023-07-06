@@ -14,7 +14,11 @@ import datacite
 logger = logging.getLogger(__name__)
 
 def get_args():
-    '''Get command line arguments as well as configuration settings'''
+    """Parse command-line arguments for deleting DOIs from DOI service.
+
+    Returns:
+        dict: A dictionary containing the parsed command-line arguments.
+    """
     parser_desc = 'Delete DOIs from DOI service.'
     parser = argparse.ArgumentParser(description=parser_desc)
     parser.add_argument("doifile", help="Line by line file of DOIs to delete")
