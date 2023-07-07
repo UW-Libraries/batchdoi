@@ -6,7 +6,7 @@ import logging
 
 
 LOGGER = logging.getLogger(__name__)
-logging.basicConfig(filename='example.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='debug.log', filemode='w', level=logging.DEBUG)
 
 
 class DOIService():

@@ -3,7 +3,7 @@
         "url": "https://api.test.datacite.org/dois",
         "username": "",
         "password": "",
-        "doi_prefix": "10.70027"
+        "doi_prefix": "10.82489"
     },
     "datacite_live": {
         "url": "https://api.datacite.org/dois",
