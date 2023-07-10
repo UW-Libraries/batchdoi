@@ -1,13 +1,35 @@
 import argparse
+import json
+
+import create
+import publish
+import delete
 
 def create_dois(args):
-    print("Creating foo:", args)
+    datacite_settings = get_datacite_settings(args)
+    create.main(args, datacite_settings)
 
 def publish_dois(args):
-    print("Publish foo:", args)
+    datacite_settings = get_datacite_settings(args)
+    publish.main(args, datacite_settings)
 
 def delete_dois(args):
-    print("Delete foo:", args)
+    datacite_settings = get_datacite_settings(args)
+    delete.main(args, datacite_settings)
+
+def get_config(path):
+    with open(path) as json_data_file:
+        settings = json.load(json_data_file)
+    return settings
+
+def get_datacite_settings(args):
+    datacite_params = get_config(args['config'])
+    if args['live']:
+        datacite_settings = datacite_params['datacite_live']
+    else:
+        datacite_settings = datacite_params['datacite_test']
+    return datacite_settings
+
 
 def main():
     parser = argparse.ArgumentParser(description='Manage batches of DOIs.')

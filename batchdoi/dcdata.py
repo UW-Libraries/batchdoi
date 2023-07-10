@@ -1,4 +1,4 @@
-def create_payload(form_data, doiname):
+def make_create_payload(form_data, doiname):
     payload = {
         "data": {
             "id": doiname,
