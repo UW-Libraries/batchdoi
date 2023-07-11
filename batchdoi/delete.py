@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 
 def main(args, datacite_settings):
     infile = args['doifile']
-    datacite_service = datacite.DataciteService(datacite_settings)
-    doi_service = services.DOIService(datacite_service, None, None)
+    datacite_service = datacite.DataciteAPI(datacite_settings)
+    doi_service = services.DOIService(datacite_service)
     with open(infile) as fh:
         for line in fh:
             doi_name = line.strip()

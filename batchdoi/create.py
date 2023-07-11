@@ -7,7 +7,6 @@
 import sys
 import logging
 import csv
-import random
 import datacite
 import dcdata
 import services
@@ -17,16 +16,10 @@ LOGGER = logging.getLogger(__name__)
 logging.basicConfig(filename='debug.log', filemode='w', level=logging.DEBUG)
 
 
-def gen_suffix():
-    chars = '0123456789bcdfghjkmnpqrstvwxyz' # alphanum without vowels and l
-    while True:
-        yield ''.join([random.choice(chars) for _ in range(8)])
-
 
 def main(args, datacite_settings):
-    datacite_service = datacite.DataciteService(datacite_settings)
-    names = services.DOINameGenerator(datacite_service, gen_suffix()).doi_names()
-    doi_service = services.DOIService(datacite_service, dcdata.make_create_payload, names)
+    datacite_service = datacite.DataciteAPI(datacite_settings)
+    doi_service = services.DOIService(datacite_service)
 
     with open(args['requests']) as csvfile:
         reader = csv.DictReader(csvfile)

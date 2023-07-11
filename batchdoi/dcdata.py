@@ -8,7 +8,7 @@ def make_create_payload(form_data, doiname):
     }
     return payload
 
-def create_publish_payload():
+def make_publish_payload():
     return {
         "data": {
             "attributes": {"event": "publish"},

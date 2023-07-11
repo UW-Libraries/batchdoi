@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 
 
 def main(args, datacite_settings):
-    datacite_service = datacite.DataciteService(datacite_settings)
-    doi_service = services.DOIService(datacite_service, dcdata.create_publish_payload, None)
+    datacite_service = datacite.DataciteAPI(datacite_settings)
+    doi_service = services.DOIService(datacite_service)
     infile = args['doifile']
     with open(infile) as fh:
         for line in fh:
