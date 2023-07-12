@@ -5,17 +5,14 @@
 '''
 import sys
 import logging
-import dcdata
 import services
 
-import datacite
 
 logger = logging.getLogger(__name__)
 
 
 def main(args, datacite_settings):
-    datacite_service = datacite.DataciteAPI(datacite_settings)
-    doi_service = services.DOIService(datacite_service)
+    doi_service = services.DOIService(datacite_settings)
     infile = args['doifile']
     with open(infile) as fh:
         for line in fh:

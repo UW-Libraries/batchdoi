@@ -7,15 +7,13 @@ import sys
 import logging
 import services
 
-import datacite
 
 logger = logging.getLogger(__name__)
 
 
 def main(args, datacite_settings):
     infile = args['doifile']
-    datacite_service = datacite.DataciteAPI(datacite_settings)
-    doi_service = services.DOIService(datacite_service)
+    doi_service = services.DOIService(datacite_settings)
     with open(infile) as fh:
         for line in fh:
             doi_name = line.strip()

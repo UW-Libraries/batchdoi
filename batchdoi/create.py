@@ -7,8 +7,6 @@
 import sys
 import logging
 import csv
-import datacite
-import dcdata
 import services
 
 
@@ -16,10 +14,8 @@ LOGGER = logging.getLogger(__name__)
 logging.basicConfig(filename='debug.log', filemode='w', level=logging.DEBUG)
 
 
-
 def main(args, datacite_settings):
-    datacite_service = datacite.DataciteAPI(datacite_settings)
-    doi_service = services.DOIService(datacite_service)
+    doi_service = services.DOIService(datacite_settings)
 
     with open(args['requests']) as csvfile:
         reader = csv.DictReader(csvfile)
