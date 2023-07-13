@@ -5,7 +5,7 @@
 '''
 import sys
 import logging
-import services
+from . import services
 
 
 logger = logging.getLogger(__name__)

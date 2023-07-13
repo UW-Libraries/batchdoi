@@ -1,7 +1,7 @@
 import unittest
-import batchdoi.services as services
 from collections import defaultdict
 from unittest.mock import Mock
+from batchdoi import services
 
 
 class TestDOIService(unittest.TestCase):

@@ -4,8 +4,8 @@
 import urllib.parse
 import logging
 import random
-import batchdoi.dcdata as dcdata
-import batchdoi.datacite as datacite
+from . import dcdata
+from . import datacite
 
 
 LOGGER = logging.getLogger(__name__)

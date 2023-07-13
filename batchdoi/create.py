@@ -7,7 +7,7 @@
 import sys
 import logging
 import csv
-import services
+from . import services
 
 
 LOGGER = logging.getLogger(__name__)

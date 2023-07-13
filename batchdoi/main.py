@@ -1,9 +1,9 @@
 import argparse
 import json
 
-import create
-import publish
-import delete
+from . import create
+from . import publish
+from . import delete
 
 def create_dois(args):
     datacite_settings = get_datacite_settings(args)
@@ -23,7 +23,10 @@ def get_config(path):
     return settings
 
 def get_datacite_settings(args):
-    datacite_params = get_config(args['config'])
+    print(args)
+    #datacite_params = get_config(args['config'])
+    datacite_params = get_config(args.config)
+
     if args['live']:
         datacite_settings = datacite_params['datacite_live']
     else:
