@@ -1,7 +1,6 @@
 """DataCite API functions
 """
 
-import urllib.parse
 import json
 import requests
 

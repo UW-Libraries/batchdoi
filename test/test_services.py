@@ -1,7 +1,7 @@
 import unittest
 from collections import defaultdict
 from unittest.mock import Mock
-from batchdoi import services
+from batchdoi import gateway
 
 
 class TestDOIService(unittest.TestCase):
@@ -21,7 +21,7 @@ class TestDOIService(unittest.TestCase):
 
         settings = defaultdict(str)
         expected = 'DOINAME'
-        doi_service = services.DOIService(settings, api, service_data_creator)
+        doi_service = gateway.DOIService(settings, api, service_data_creator)
         response = doi_service.submit_doi(defaultdict(str), True)
         self.assertEqual(response, expected)
 
@@ -41,7 +41,7 @@ class TestDOIService(unittest.TestCase):
         
         settings = defaultdict(str)
         expected = 'ERROR'
-        doi_service = services.DOIService(settings, api, service_data_creator)
+        doi_service = gateway.DOIService(settings, api, service_data_creator)
         response = doi_service.submit_doi({}, True)
         self.assertEqual(response, expected)
 
@@ -53,7 +53,7 @@ class TestDOIService(unittest.TestCase):
         api.update_doi.return_value = response
 
         settings = defaultdict(str)
-        doi_service = services.DOIService(settings, api, Mock())
+        doi_service = gateway.DOIService(settings, api, Mock())
         response = doi_service.publish_doi('')
         expected = True
         self.assertEqual(response, expected)
@@ -66,7 +66,7 @@ class TestDOIService(unittest.TestCase):
         api.update_doi.return_value = response
 
         settings = defaultdict(str)
-        doi_service = services.DOIService(settings, api, Mock())
+        doi_service = gateway.DOIService(settings, api, Mock())
         response = doi_service.publish_doi('')
         expected = False
         self.assertEqual(response, expected)
@@ -77,7 +77,7 @@ class TestDOIService(unittest.TestCase):
         response.status_code = 201
         api.delete_doi.return_value = response
         settings = defaultdict(str)
-        doi_service = services.DOIService(settings, api, Mock())
+        doi_service = gateway.DOIService(settings, api, Mock())
         response = doi_service.delete_doi('')
         expected = True
         self.assertEqual(response, expected)
@@ -88,7 +88,7 @@ class TestDOIService(unittest.TestCase):
         response.status_code = 404
         api.delete_doi.return_value = response
         settings = defaultdict(str)
-        doi_service = services.DOIService(settings, api, Mock())
+        doi_service = gateway.DOIService(settings, api, Mock())
         response = doi_service.delete_doi('')
         expected = False
         self.assertEqual(response, expected)
