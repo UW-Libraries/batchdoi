@@ -27,12 +27,12 @@ def make_arg_parser():
 
     publish_parser = subparsers.add_parser('publish', help='Publish previously created DOIs.')
     publish_parser.add_argument("doifile", help="Line by line file of DOIs to publish")
-    publish_parser.add_argument("-c", "--config", help="Config file path (defaults to './config.json')", default='config.json')
+    publish_parser.add_argument("-c", "--config", help="Config file path (defaults to './config.json')", default='')
     publish_parser.add_argument('-l', '--live', action='store_true', help="Publish DOIs on the live system instead of the test system")
 
     delete_parser = subparsers.add_parser('delete', help='Delete previously created DOIs.')
     delete_parser.add_argument("doifile", help="Line by line file of DOIs to delete")
-    delete_parser.add_argument("-c", "--config", help="Config file path (defaults to './config.json')", default='config.json')
+    delete_parser.add_argument("-c", "--config", help="Config file path (defaults to './config.json')", default='')
     delete_parser.add_argument('-l', '--live', action='store_true', help="Delete DOIs from the live system instead of the test system")
 
     return parser
@@ -104,7 +104,6 @@ def get_config(path):
         if not os.path.isfile(path):
             raise ValueError("Default config.json file not found %s" % path)
         LOGGER.debug("Using default config.json file %s" % path)
-
 
     with open(path) as json_data_file:
         settings = json.load(json_data_file)
