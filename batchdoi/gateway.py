@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# coding: utf8
 
 import urllib.parse
 import logging
@@ -9,7 +8,7 @@ from . import datacite
 
 
 LOGGER = logging.getLogger(__name__)
-logging.basicConfig(filename='debug.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='debug.log', filemode='w', level=logging.WARNIING)
 
 
 class DOIService():
@@ -65,32 +64,9 @@ class DOIService():
         response = self.api.get_doi(url)
         status_code = response.status_code
         return status_code != 404
-    
-
-# def gen_names(prefix):
-#     while True:
-#         yield '%s/%s' % (prefix, next(gen_suffix()))
 
 
 def gen_suffix():
     chars = '0123456789bcdfghjkmnpqrstvwxyz' # alphanum without vowels and l
     while True:
         yield ''.join([random.choice(chars) for _ in range(8)])
-
-# class DOINameGenerator():
-#     def __init__(self, external_service, gen_suffix):
-#         self.external_service = external_service
-#         self.gen_suffix = gen_suffix
-
-#     def doi_names(self):
-#         for suffix in self.gen_suffix:
-#             doi = '%s/%s' % (self.external_service.prefix, suffix)
-#             if not self.doi_exists(doi):
-#                 yield doi
-
-#     def doi_exists(self, doi):
-#         response = self.external_service.get_doi(doi)
-#         status_code = response.status_code
-#         return status_code != 404
-
-
