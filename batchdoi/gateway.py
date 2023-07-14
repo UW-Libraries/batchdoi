@@ -8,7 +8,7 @@ from . import datacite
 
 
 LOGGER = logging.getLogger(__name__)
-logging.basicConfig(filename='debug.log', filemode='w', level=logging.WARNIING)
+logging.basicConfig(filename='batchdoi.log', filemode='w', level=logging.WARNING)
 
 
 class DOIService():

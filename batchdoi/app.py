@@ -5,10 +5,10 @@ import argparse
 import json
 import csv
 
-from . import services
+from . import gateway
 
 LOGGER = logging.getLogger(__name__)
-logging.basicConfig(filename='debug.log', filemode='w', level=logging.WARNING)
+logging.basicConfig(filename='batchdoi.log', filemode='w', level=logging.WARNING)
 
 
 def make_arg_parser():
@@ -25,14 +25,14 @@ def make_arg_parser():
     create_parser.add_argument('-p', '--publish', action='store_true', help="Publish DOIs in addition to creating them. Note that published DOIs cannot be deleted.")
 
     publish_parser = subparsers.add_parser('publish', help='Publish previously created DOIs.')
-    publish_parser.add_argument("doifile", help="Line by line file of DOIs to delete")
+    publish_parser.add_argument("doifile", help="Line by line file of DOIs to publish")
     publish_parser.add_argument("-c", "--config", help="Config file path (defaults to './config.json')", default='config.json')
-    publish_parser.add_argument('-l', '--live', action='store_true', help="Create DOIs on the live system instead of the test system")
+    publish_parser.add_argument('-l', '--live', action='store_true', help="Publish DOIs on the live system instead of the test system")
 
     delete_parser = subparsers.add_parser('delete', help='Delete previously created DOIs.')
     delete_parser.add_argument("doifile", help="Line by line file of DOIs to delete")
     delete_parser.add_argument("-c", "--config", help="Config file path (defaults to './config.json')", default='config.json')
-    delete_parser.add_argument('-l', '--live', action='store_true', help="Create DOIs on the live system instead of the test system")
+    delete_parser.add_argument('-l', '--live', action='store_true', help="Delete DOIs from the live system instead of the test system")
 
     return parser
 
@@ -41,7 +41,7 @@ def create_dois(args):
     """Creates DOIs from a CSV file.
     """
     datacite_settings = get_datacite_settings(args)
-    doi_service = services.DOIService(datacite_settings)
+    doi_service = gateway.DOIService(datacite_settings)
 
     with open(args.requests) as csvfile:
         reader = csv.DictReader(csvfile)
@@ -62,7 +62,7 @@ def publish_dois(args):
     """Publishes DOIs listed in a file.
     """
     datacite_settings = get_datacite_settings(args)
-    doi_service = services.DOIService(datacite_settings)
+    doi_service = gateway.DOIService(datacite_settings)
     infile = args.doifile
     with open(infile) as fh:
         for line in fh:
@@ -75,7 +75,7 @@ def delete_dois(args):
     """
     datacite_settings = get_datacite_settings(args)
     infile = args.doifile
-    doi_service = services.DOIService(datacite_settings)
+    doi_service = gateway.DOIService(datacite_settings)
     with open(infile) as fh:
         for line in fh:
             doi_name = line.strip()
