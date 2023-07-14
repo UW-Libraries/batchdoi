@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import logging
 import argparse
 import json
@@ -19,7 +20,7 @@ def make_arg_parser():
 
     create_parser = subparsers.add_parser('create', help='Create DOIs from input file.')
     create_parser.add_argument("requests", help="CSV formatted file of DOI requests")
-    create_parser.add_argument("-c", "--config", help="Config file path (defaults to './config.json')", default='config.json')
+    create_parser.add_argument("-c", "--config", help="Config file path (defaults to './config.json')", default='')
     create_parser.add_argument('-s', '--submit', action='store_true', help="Submit DOI data to Datacite")
     create_parser.add_argument('-l', '--live', action='store_true', help="Create DOIs on the live system instead of the test system")
     create_parser.add_argument('-p', '--publish', action='store_true', help="Publish DOIs in addition to creating them. Note that published DOIs cannot be deleted.")
@@ -96,6 +97,15 @@ def get_datacite_settings(args):
 def get_config(path):
     """Read the config info from a file.
     """
+    # If no path is given, look for a config file in the same directory as this script
+    if not path:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(script_dir, "config.json")
+        if not os.path.isfile(path):
+            raise ValueError("Default config.json file not found %s" % path)
+        LOGGER.debug("Using default config.json file %s" % path)
+
+
     with open(path) as json_data_file:
         settings = json.load(json_data_file)
     return settings
