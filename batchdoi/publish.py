@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 def main(args, datacite_settings):
     doi_service = services.DOIService(datacite_settings)
-    infile = args['doifile']
+    infile = args.doifile
     with open(infile) as fh:
         for line in fh:
             doi_name = line.strip()

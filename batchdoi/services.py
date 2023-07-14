@@ -52,7 +52,7 @@ class DOIService():
     
     def delete_doi(self, doi_name):
         url = '{}/{}'.format(self.url, urllib.parse.quote_plus(doi_name))
-        response = self.api.delete_doi(doi_name)
+        response = self.api.delete_doi(self.auth, url)
         if response.status_code == 201:
             LOGGER.debug('DOI deleted:' + doi_name)
         elif response.status_code == 404:
