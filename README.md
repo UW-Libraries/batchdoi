@@ -1,5 +1,5 @@
-# Bulk DOI Utilities
-Scripts for use in creating and managing bulk DOI requests.
+# Batch DOI Utilities
+Scripts for use in creating and managing batch DOI requests.
 
 ## Background
 
@@ -17,8 +17,8 @@ You will need Python 3.x and the requests library to run these scripts.
 
 1. Clone the respository
 
-    git clone https://github.com/UW-Libraries/bulkdoi.git  
-    cd bulkdoi  
+    git clone https://github.com/UW-Libraries/batchdoi.git  
+    cd batchdoi  
 
 2. Create a config.json file.
 
@@ -26,17 +26,17 @@ You will need Python 3.x and the requests library to run these scripts.
 
 ### Example usage
 
-```python3 bulkdoi/create.py --config CONFIG-FILE REQUESTS-FILE > DOI-NAME-FILE```   
+```python3 -m batchdoi create --config CONFIG-FILE REQUESTS-FILE > DOI-NAME-FILE```   
 
 *requests-file* is CSV file with DOI request data. See the **requests-example.csv** file for format. Refer to guide below for more detailed information about the fields for the requests data.
 
 This script will create DOIs on the test Datacite system. DOIs can be viewed on our [test Fabrica account](https://doi.test.datacite.org/repositories/orbis.uwl).
 
-```python3 bulkdoi/delete.py --config CONFIG-FILE DOI-NAME-FILE```
+```python3 -m batchdoi delete --config CONFIG-FILE DOI-NAME-FILE```
 
 This command will delete DOIs on Datacite. The DOIs to delete are listed in *doi-name-file*. This file should contain one DOI per line.
 
-```python3 bulkdoi/publish.py --config CONFIG-FILE DOI-NAME-FILE```
+```python3 -m batchdoi publish --config CONFIG-FILE DOI-NAME-FILE```
 
 This command will make specified DOIs available for search. Note that DOIs that are published can no longer be deleted.
 
@@ -83,4 +83,4 @@ All additional information that does not fit in any of the other categories.
 
 ## Run Tests
 
-To run tests execute the command: ```python3 -m unittest```
+To run tests execute the command: ```python3 -m unittest discover```

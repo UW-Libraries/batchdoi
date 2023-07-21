@@ -1,4 +1,9 @@
-def create_payload(form_data, doiname):
+"""Functions for creating payloads for DataCite API requests.
+"""
+
+def make_create_payload(form_data, doiname):
+    """Creates a payload for creating a DOI.
+    """
     payload = {
         "data": {
             "id": doiname,
@@ -8,14 +13,20 @@ def create_payload(form_data, doiname):
     }
     return payload
 
-def create_publish_payload():
+
+def make_publish_payload():
+    """Creates a payload for publishing a DOI.
+    """
     return {
         "data": {
             "attributes": {"event": "publish"},
         }
     }
 
+
 def make_attributes(form_data, doiname):
+    """Creates the attributes for a DOI.
+    """
     attributes = {
         'doi': doiname,
         'url': form_data['url'],
@@ -29,7 +40,10 @@ def make_attributes(form_data, doiname):
         attributes['descriptions'] = [{'description': form_data['description']}]
     return attributes
 
+
 def make_creator(name):
+    """Creates a creator for a DOI.
+    """
     assert(name)
     nametype, splitname = parse_name(name)
     if nametype == 'Personal':
@@ -53,7 +67,10 @@ def make_creator(name):
     else:
         raise ValueError
 
+
 def parse_name(name):
+    """Parses the given name and returns the name type and a list of split names.
+    """
     name = name.strip()
     nametype = 'Personal'
     if name[0] == '[':

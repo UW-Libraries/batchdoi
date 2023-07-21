@@ -1,6 +1,6 @@
 import unittest
-import batchdoi.dcdata as dcdata
 from unittest.mock import patch
+from batchdoi import dcdata
 
 
 class TestCreatePayload(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestCreatePayload(unittest.TestCase):
         }
         with patch('batchdoi.dcdata.make_attributes') as mock_make_attributes:
             mock_make_attributes.return_value = 'ATTRIBUTES'
-            self.assertEqual(dcdata.create_payload(None, 'DOINAME'), expected)
+            self.assertEqual(dcdata.make_create_payload(None, 'DOINAME'), expected)
 
 
 class TestMakeAttributes(unittest.TestCase):
