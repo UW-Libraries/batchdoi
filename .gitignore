@@ -134,3 +134,4 @@ config.json
 .idea/
 credentials.ini
 *.xlsx
+.vscode/
